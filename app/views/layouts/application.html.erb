@@ -15,9 +15,13 @@
     </div>
     <div>
       <a href="/">Home</a>
-      <a href="/logout">Logout</a>
-      <a href="/login">Login</a>
-      <a href="/users/new">Signup</a>
+      <% if current_user %>
+        <a href="/logout">Logout</a>
+        <p><span>Logged in as <strong><%= current_user.username %></strong></span></p>
+      <% else %>
+        <a href="/login">Login</a>
+        <a href="/users/new">Signup</a>
+      <% end %>
     </div>
 
     <%= yield %>
