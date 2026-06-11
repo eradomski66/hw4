@@ -1,7 +1,11 @@
 class PlacesController < ApplicationController
 
   def index
-    @places = Place.all
+    if @current_user.nil?
+      redirect_to "/login"
+    else
+      @places = Place.where(user_id: @current_user.id)
+    end
   end
 
   def show
@@ -15,6 +19,7 @@ class PlacesController < ApplicationController
   def create
     @place = Place.new
     @place["name"] = params["name"]
+    @place["user_id"] = @current_user.id
     @place.save
     redirect_to "/places"
   end
